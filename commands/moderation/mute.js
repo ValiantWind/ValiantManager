@@ -9,6 +9,7 @@ module.exports = {
     name: 'mute',
     aliases: ['shut'],
     UserPerms: ["MUTE_MEMBERS"],
+    BotPerms: ["MANAGE_MESSAGES", "MUTE_MEMBERS"],
     description: 'prevents a member from speaking in text channels',
     usage: '',
     /** 

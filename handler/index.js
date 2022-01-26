@@ -23,3 +23,4 @@ module.exports = async (client) => {
     const eventfiles = await globPromise(`${process.cwd()}/events/*.js`);
     eventfiles.map((value) => require(value));
 }
+

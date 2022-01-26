@@ -8,6 +8,7 @@ module.exports = {
     name: 'ban',
     aliases: ['exile'],
     UserPerms: ["BAN_MEMBERS"],
+    BotPerms: ["BAN_MEMBERS"],
     /** 
      * @param {Client} client 
      * @param {Message} message 

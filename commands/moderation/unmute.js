@@ -4,6 +4,7 @@ module.exports = {
     name: 'unmute',
     aliases: ['unshut'],
     UserPerms: ["MUTE_MEMBERS"],
+    BotPerms: ["MANAGE_MESSAGES", "MUTE_MEMBERS"],
     description: 'Allows a member to speak in text channels again after being muted before.',
     usage: '',
     /** 

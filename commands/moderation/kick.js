@@ -7,6 +7,7 @@ const {
 module.exports = {
     name: 'kick',
     UserPerms: ["KICK_MEMBERS"],
+    BotPerms: ["KICK_MEMBERS"],
     /** 
      * @param {Client} client 
      * @param {Message} message 
@@ -21,7 +22,7 @@ module.exports = {
                 message.channel.send('Kicked!')
             })
         } else {
-            message.channel.send('cant find user')
+            message.channel.send('cannot find user')
         }
 
     }

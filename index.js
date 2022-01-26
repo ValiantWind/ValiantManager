@@ -21,6 +21,7 @@ const client = new Client({
 });
 module.exports = client;
 client.commands = new Collection();
+client.aliases = new Collection();
 client.prefix = process.env.PREFIX
 
 require('./handler')(client);

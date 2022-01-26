@@ -7,7 +7,8 @@ const {
 module.exports = {
     name: 'purge',
     aliases: ['clear'],
-    UserPerms: ['MANAGE_MESSAGES'],
+    UserPerms: ['MANAGE_MESSAGES', 'MUTE_MEMBERS', 'MODERATE_MEMBERS'],
+    BotPerms: ["MANAGE_MESSAGES"],
     /** 
      * @param {Client} client 
      * @param {Message} message 

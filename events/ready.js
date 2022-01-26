@@ -4,7 +4,7 @@ client.on("messageCreate", async (message) => {
     if (message.author.bot || !message.guild) return
 
     const [cmd, ...args] = message.content
-        .slice(client.config.prefix.length)
+        .slice(client.prefix.length)
         .trim()
         .split(" ");
 
