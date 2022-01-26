@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "canvacord": "^5.2.3",
+    "discord-logs": "^2.0.1",
     "discord-xp": "^1.1.16",
     "discord.js": "^13.6.0",
     "express": "^4.17.2",
