@@ -20,9 +20,13 @@ const client = new Client({
     ],
 });
 module.exports = client;
+client.prefix = process.env.PREFIX
 client.commands = new Collection();
 client.aliases = new Collection();
-client.prefix = process.env.PREFIX
+client.events = new Collection();
+client.functions = new Collection();
+client.models = new Colleciton();
+
 
 require('./handler')(client);
 
