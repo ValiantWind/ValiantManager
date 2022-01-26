@@ -22,7 +22,7 @@ module.exports = {
             .setRequiredXP(neededXp)
             .setRank(user.position)
             .setStatus('online')
-            .setProgressBar('#FF0000', 'COLOR') // you can change RANKDOM to any other color
+            .setProgressBar('##278be8', 'COLOR') // you can change RANKDOM to any other color
             .setUsername(memberTarget.user.username)
             .setDiscriminator(memberTarget.user.discriminator);
 
