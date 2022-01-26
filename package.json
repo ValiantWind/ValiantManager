@@ -1,0 +1,23 @@
+{
+  "name": "ValiantManager-1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^13.6.0",
+    "express": "^4.17.2",
+    "glob": "^7.2.0",
+    "mongodb": "^4.3.1",
+    "mongoose": "^6.1.8"
+  },
+  "devDependencies": {
+    "node": "^16.13.2"
+  },
+  "description": ""
+}
