@@ -29,7 +29,7 @@ module.exports = {
             })
 
         } else {
-            message.channel.send('cannot find the user!')
+            message.channel.send('could not find the user!')
         }
 
     }

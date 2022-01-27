@@ -7,7 +7,7 @@ const warndb = require('../../models/warndb')
 
 module.exports = {
     name: 'warnings',
-    aliases: ['warns'],
+     UserPerms: ['MODERATE_MEMBERS'],
     /** 
      * @param {Client} client 
      * @param {Message} message 

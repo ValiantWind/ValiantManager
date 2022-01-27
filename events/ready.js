@@ -1,3 +1,4 @@
+const Discord = require('discord.js')
 const client = require('../index')
 
 client.on("messageCreate", async (message) => {
@@ -12,5 +13,5 @@ client.on("messageCreate", async (message) => {
 
     if (!command) return;
 
-    await command.run(client, message, args)
+    await command.run(client, message, args, Discord)
 })

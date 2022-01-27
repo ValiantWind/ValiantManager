@@ -1,9 +1,8 @@
 const db = require('../../models/warndb')
 
 module.exports = {
-    name: 'clearwarns',
-    aliases: ['clearwarnings'],
-    UserPerms: ["MODERATE_MEMBERS"],
+    name: 'remove-all-warns',
+    UserPerms: ['MODERATE_MEMBERS'],
     run: async (client, message, args) => {
         const user = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
         if (!user) return message.channel.send('User not found.')
@@ -21,6 +20,6 @@ module.exports = {
             } else {
                 message.channel.send('This user does not have any warns in this server!')
             }
-        }) // lets try it :D
+        })
     }
 }

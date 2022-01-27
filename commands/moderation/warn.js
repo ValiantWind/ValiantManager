@@ -3,7 +3,7 @@ const {
     Message,
     MessageEmbed
 } = require('discord.js');
-const warndb = require('../../models/warndb');
+const db = require('../../models/warndb');
 
 module.exports = {
     name: 'warn',
@@ -21,13 +21,13 @@ module.exports = {
         const reason = args.slice(1).join(" ")
         if (!reason) return message.reply('Tell me a reason')
 
-        warndb.findOne({
+        db.findOne({
             guild: message.guild.id,
             user: user.user.id
         }, async (err, data) => {
             if (err) throw err;
             if (!data) {
-                data = new warndb({
+                data = new db({
                     guild: message.guild.id,
                     user: user.user.id,
                     content: [{
@@ -46,8 +46,8 @@ module.exports = {
 
         })
 
-        message.channel.send('Warned the user!')
-        user.send('You have been warned!')
+        message.channel.send('Warned the user!');
+        user.send('You have been warned!');
 
     }
 }

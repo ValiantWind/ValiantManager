@@ -3,6 +3,7 @@ const db = require('../../models/warndb')
 
 module.exports = {
     name: 'remove-warn',
+    UserPerms: ['MODERATE_MEMBERS'],
     /** 
      * @param {Client} client 
      * @param {Message} message 

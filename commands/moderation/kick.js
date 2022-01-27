@@ -16,10 +16,16 @@ module.exports = {
     run: async (client, message, args, Discord) => {
 
         const user = message.mentions.members.first();
+        const user2 = message instanceof Discord.CommandInteraction ? message.user : message.author;
+        const embed = new Discord.MessageEmbed();
+
 
         if (user) {
             user.kick().then(() => {
-                message.channel.send('Kicked!')
+              embed
+              .setColor('#ff0000')
+              .setDescription(`${user.username} was banned!`)
+               // message.channel.send('Kicked!')
             })
         } else {
             message.channel.send('cannot find user')
