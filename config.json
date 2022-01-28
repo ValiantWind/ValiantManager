@@ -1,3 +1,4 @@
 {
-    "mongooseConnectionString": "mongodb+srv://ValiantWind:nXJcnt37HFszvu9@valiantmanagerdiscordbo.2ocvc.mongodb.net/data"
+    "mongooseConnectionString": "mongodb+srv://ValiantWind:nXJcnt37HFszvu9@valiantmanagerdiscordbo.2ocvc.mongodb.net/data",
+    "token": "OTI3NzQ2MDEyNzIwNzkxNTcy.YdOszg.AEj3nBxlm7VJ-Ut4kHDLMFghhOs"
 }

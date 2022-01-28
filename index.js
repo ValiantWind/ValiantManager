@@ -1,5 +1,3 @@
-const express = require("express");
-const app = express()
 const { Collection, Client } = require('discord.js');
 const client = new Client({
     intents: [
@@ -42,13 +40,6 @@ client.models = new Collection();
 require('./handler')(client);
 
 
-app.get('/', (req, res) => {
-  res.send('Hello Express app!')
-});
-
-app.listen(3000, () => {
-  console.log('server started');
-});
 //client.on('ready', () => {
  //   console.log(`${client.user.tag} is now online!`)
 //})
