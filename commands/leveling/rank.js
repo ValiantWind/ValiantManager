@@ -8,8 +8,10 @@ module.exports = {
         let memberTarget = message.guild.members.cache.get(target.id);
         const user = await Levels.fetch(target.id, message.guild.id, true);
         const neededXp = Levels.xpFor(parseInt(user.level) + 1);
+        const gradient = Canvacord.Canvas.gradient("red", "blue", 934, 282);
+        
         if (user.length < 1) return message.reply({
-            content: `${process.env.FAILURE_EMOJI} You Dont have xp, try sending messages!`,
+            content: `${process.env.FAILURE_EMOJI} You don't have xp. Send messages to gain some xp!`,
 
         })
         const rank = new canvacord.Rank()
@@ -22,9 +24,11 @@ module.exports = {
             .setRequiredXP(neededXp)
             .setRank(user.position)
             .setStatus('online')
-            .setProgressBar('##278be8', 'COLOR') // you can change RANKDOM to any other color
+            .setProgressBar('##278be8', 'COLOR')
             .setUsername(memberTarget.user.username)
-            .setDiscriminator(memberTarget.user.discriminator);
+            .setDiscriminator(memberTarget.user.discriminator)
+            .setBackground("IMAGE", "C:/Users/Pavan/Downloads/DomRoblox-Icon.jpg")
+
 
         rank.build()
             .then(data => {
