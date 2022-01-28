@@ -21,7 +21,8 @@ const client = new Client({
 });
 module.exports = client;
 
-const { mongooseConnectionString } = require("./config.json");
+const { mongooseConnectionString } = require('./config.json');
+const config = require('./config.json')
 const mongoose = require("mongoose");
 mongoose.connect(mongooseConnectionString, {
     useNewUrlParser: true,
@@ -29,7 +30,7 @@ mongoose.connect(mongooseConnectionString, {
 }).then(console.log('Connected to mongodb!'))
 
 
-client.prefix = process.env.PREFIX
+client.prefix = config.prefix
 client.commands = new Collection();
 client.aliases = new Collection();
 client.events = new Collection();
@@ -44,4 +45,4 @@ require('./handler')(client);
  //   console.log(`${client.user.tag} is now online!`)
 //})
 
-client.login(process.env.TOKEN);
+client.login(config.token);
