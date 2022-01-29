@@ -21,8 +21,9 @@ const client = new Client({
 });
 module.exports = client;
 
-const { mongooseConnectionString } = require('./config.json');
+const { mongooseConnectionString } = (process.env.MONGOOSE_CONNECTION_STRING)
 const config = require('./config.json')
+require('dotenv').config()
 const mongoose = require("mongoose");
 mongoose.connect(mongooseConnectionString, {
     useNewUrlParser: true,
@@ -45,4 +46,4 @@ require('./handler')(client);
  //   console.log(`${client.user.tag} is now online!`)
 //})
 
-client.login(config.token);
+client.login(process.env.TOKEN);
