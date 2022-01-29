@@ -18,6 +18,7 @@ module.exports = {
 
         const user = message.mentions.members.first();
         const reason = args.slice(1).join(' ');
+        const embed = new Discord.MessageEmbed();
         if (!reason) return message.channel.send('Tell me the reason!');
 
         if (user) {
@@ -25,12 +26,15 @@ module.exports = {
             await user.ban({
                 reason: reason,
             }).then(() => {
-                message.channel.send('Banned!')
+                embed
+              .setColor('#ff0000')
+              .setDescription(`${user.username} was kicked!`)
             })
 
         } else {
-            message.channel.send('could not find the user!')
+            message.channel.send('I could not find the user!')
         }
 
     }
 }
+

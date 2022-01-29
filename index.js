@@ -21,9 +21,9 @@ const client = new Client({
 });
 module.exports = client;
 
-const { mongooseConnectionString } = (process.env.MONGOOSE_CONNECTION_STRING)
-const config = require('./config.json')
 require('dotenv').config()
+const mongooseConnectionString  = (process.env.MongooseConnectionString);
+const config = require('./config.json')
 const mongoose = require("mongoose");
 mongoose.connect(mongooseConnectionString, {
     useNewUrlParser: true,

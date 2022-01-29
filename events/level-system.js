@@ -1,7 +1,5 @@
 const Levels = require('discord-xp');
-const {
-    mongooseConnectionString
-} = require("../config.json")
+const mongooseConnectionString = (process.env.MongooseConnectionString);
 Levels.setURL(mongooseConnectionString);
 const client = require('../index');
 

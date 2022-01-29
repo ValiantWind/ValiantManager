@@ -17,18 +17,19 @@ module.exports = {
 
         const user = message.mentions.members.first();
         const user2 = message instanceof Discord.CommandInteraction ? message.user : message.author;
-        const embed = new Discord.MessageEmbed();
+        const embed = new MessageEmbed();
 
 
         if (user) {
             user.kick().then(() => {
               embed
-              .setColor('#ff0000')
-              .setDescription(`${user.username} was banned!`)
-               // message.channel.send('Kicked!')
+              .setColor('##00aaff')
+              .setDescription(`${user.username} was kicked!`)
+              .setThumbnail(user.displayAvatarURL({dynamic : true}))
+               message.channel.send({embeds: [embed] });
             })
         } else {
-            message.channel.send('cannot find user')
+            message.channel.send(`I could not find ${user}`)
         }
 
     }
