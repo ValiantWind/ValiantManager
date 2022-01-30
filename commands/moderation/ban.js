@@ -28,7 +28,7 @@ module.exports = {
             }).then(() => {
                 embed
               .setColor('#ff0000')
-              .setDescription(`${user.username} was kicked!`)
+              .setDescription(`${user.username} was banned!`)
             })
 
         } else {

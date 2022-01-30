@@ -15,14 +15,11 @@ module.exports = {
             embed
             .setColor('#ff0000')
             .setTitle('Embed')
-           // .setURL('https://youtube.com/c/FiredragonPlayz')//==
             //.setAuthor(user.username)
             .setDescription('This is a embed')
             .setThumbnail(user.displayAvatarURL({dynamic : true}))
             .addFields(
                 { name: 'Field 1', value: 'hi' },
-                { name: 'Field 2', value: 'holla' }, // lets add one more field and remove the \u200b
-                //{ name: '\u200B', value: '\u200B' }, // this is optional.. the \u200b is for leaving space under the first field
             )
             .addField('Field 4', 'sup')
             .addField('Field 5', 'hello')
