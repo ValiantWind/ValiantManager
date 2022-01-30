@@ -15,7 +15,7 @@ module.exports = {
             embed
             .setColor('#ff0000')
             .setTitle('Embed')
-            .setURL('https://youtube.com/c/FiredragonPlayz')
+           // .setURL('https://youtube.com/c/FiredragonPlayz')//==
             //.setAuthor(user.username)
             .setDescription('This is a embed')
             .setThumbnail(user.displayAvatarURL({dynamic : true}))
