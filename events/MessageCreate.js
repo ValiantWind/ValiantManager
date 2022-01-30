@@ -30,11 +30,8 @@ client.on("messageCreate", async (message) => {
     }
     for (const link of links) {
         if (message.content.includes(link)) {
-          if (message.channel.id === "908281997170987038") {
-            return;
-          }
-          message.delete();
-          message.channel.send(`${message.author}, please do not scam.`);
+          message.delete()
+          message.channel.send(`${message.author}, please do not scam.`)
         }
       }
 })
