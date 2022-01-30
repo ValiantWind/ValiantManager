@@ -1,4 +1,5 @@
 const client = require('../index')
+const links = require("../utils/scam.json");
 
 client.on('ready', () => {
     console.log(`${client.user.tag} is now online!`)
@@ -27,4 +28,13 @@ client.on("messageCreate", async (message) => {
 
         await command.run(client, message, args, Discord)
     }
+    for (const link of links) {
+        if (message.content.includes(link)) {
+          if (message.channel.id === "908281997170987038") {
+            return;
+          }
+          message.delete();
+          message.channel.send(`${message.author}, please do not scam.`);
+        }
+      }
 })
