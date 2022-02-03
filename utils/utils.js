@@ -140,67 +140,10 @@ function replaceCrownKeywords(message) {
     .replace(/\?username/g, '`?username`')
     .replace(/\?tag/g, '`?tag`')
     .replace(/\?role/g, '`?role`')
-    .replace(/\?points/g, '`?points`');
+    .replace(/\?exp/g, '`?exp`');
 }
 
-/**
- * Transfers crown from one member to another
- * @param {Client} client 
- * @param {Guild} guild
- * @param {Role} crownRole
- */
-async function transferCrown(client, guild, crownRoleId) {
-
-  const crownRole = guild.roles.cache.get(crownRoleId);
   
-  // If crown role is unable to be found
-  if (!crownRole) {
-    return client.sendSystemErrorMessage(guild, 'crown update', stripIndent`
-      Unable to transfer crown role, it may have been modified or deleted
-    `);
-  }
-  
-  const leaderboard = client.db.users.selectLeaderboard.all(guild.id);
-  const winner = guild.members.cache.get(leaderboard[0].user_id);
-  const points = client.db.users.selectPoints.pluck().get(winner.id, guild.id);
-  let quit = false;
-
-  // Remove role from losers
-  await Promise.all(guild.members.cache.map(async member => { // Good alternative to handling async forEach
-    if (member.roles.cache.has(crownRole.id)) {
-      try {
-        await member.roles.remove(crownRole);
-      } catch (err) {
-
-        quit = true;
-        
-        return client.sendSystemErrorMessage(guild, 'crown update', stripIndent`
-          Unable to transfer crown role, please check the role hierarchy and ensure I have the Manage Roles permission
-        `, err.message);
-      } 
-    }
-  }));
-
-  if (quit) return;
-
-  // Give role to winner
-  try {
-    await winner.roles.add(crownRole);
-    // Clear points
-    client.db.users.wipeAllPoints.run(guild.id);
-  } catch (err) {
-    return client.sendSystemErrorMessage(guild, 'crown update', stripIndent`
-      Unable to transfer crown role, please check the role hierarchy and ensure I have the Manage Roles permission
-    `, err.message);
-  }
-
-
-/**
- * Schedule crown role rotation if checks pass
- * @param {Client} client 
- * @param {Guild} guild
- */
-}
 
 module.exports = {
   capitalize,

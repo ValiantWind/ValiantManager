@@ -1,40 +1,119 @@
-const {
-    Client,
-    Message,
-    MessageEmbed
-} = require('discord.js');
-const warndb = require('../../models/warndb')
+const Command = require('../Command.js');
+const ReactionMenu = require('../ReactionMenu.js');
+const { MessageEmbed } = require('discord.js');
 
-module.exports = {
-    name: 'warnings',
-     UserPerms: ['MODERATE_MEMBERS'],
-    /** 
-     * @param {Client} client 
-     * @param {Message} message 
-     * @param {String[]} args 
-     */
-    run: async (client, message, args, Discord) => {
+module.exports = class WarnsCommand extends Command {
+  constructor(client) {
+    super(client, {
+      name: 'warnings',
+      aliases: ['warns'],
+      usage: 'Warns <user mention/ID>',
+      description: 'Displays a member\'s current warnings. A max of 5 warnings can be displayed at one time.',
+      type: client.types.MOD,
+      userPermissions: ['KICK_MEMBERS'],
+      examples: ['warns @Dom']
+    });
+  }
+  run(message, args) {
 
-        const user = message.mentions.members.first() || message.author.id;
+    const member = this.getMemberFromMention(message, args[0]) || message.guild.members.cache.get(args[0]);
+    if (!member) 
+      return this.sendErrorMessage(message, 0, 'Please mention a user or provide a valid user ID');
 
-        warndb.findOne({
-            guild: message.guild.id, 
-            user: user.id
-        }, async (err, data) => {
-            if (err) throw err
-            if (data) {
-                const e = data.content.map(
-                    (w, i) => `\n\`${i + 1}\` - Moderator: ${message.guild.members.cache.get(w.moderator).user.tag}, Reason: ${w.reason}`
-                )
-                const embed = new MessageEmbed()
-                    .setDescription(e.join(' '))
-                message.channel.send({
-                    embeds: [embed]
-                })
-            } else {
-                message.channel.send('This user does not have any warnings')
-            }
-        })
+    let warns = message.client.db.users.selectWarns.pluck().get(member.id, message.guild.id) || { warns: [] };
+    if (typeof(warns) == 'string') warns = JSON.parse(warns);
+    const count = warns.warns.length;
+
+    const embed = new MessageEmbed()
+      .author(member.user.tag, member.user.displayAvatarURL({ dynamic: true }))
+      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setTimestamp()
+      .setColor(message.guild.me.displayHexColor);
+    
+    const buildEmbed = (current, embed) => {
+      const max = (count > current + 5) ? current + 5 : count;
+      let amount = 0;
+      for (let i = current; i < max; i++) {
+        embed // Build warning list
+          .addField('\u200b', `**Warn \`#${i + 1}\`**`)
+          .addField('Reason', warns.warns[i].reason)
+          .addField(
+            'Moderator', 
+            message.guild.members.cache.get(warns.warns[i].mod) || '`Unable to find moderator`',
+            true
+          )
+          .addField('Date Issued', warns.warns[i].date, true);
+        amount += 1;
+      }
+
+      return embed
+        .setTitle('Warn List ' + this.client.utils.getRange(warns.warns, current, 5))
+        .setDescription(`Showing \`${amount}\` of ${member}'s \`${count}\` total warns.`);
+    };
+
+    if (count == 0) message.channel.send(embed
+      .setTitle('Warn List [0]')
+      .setDescription(`${member} currently has no warns. What a nice member :>`)
+    );
+    else if (count < 5) message.channel.send(buildEmbed(0, embed));
+    else {
+
+      let n = 0;
+      const json = embed.setFooter(
+        'Expires after three minutes.\n' + message.member.displayName, 
+        message.author.displayAvatarURL({ dynamic: true })
+      ).toJSON();
+      
+      const first = () => {
+        if (n === 0) return;
+        n = 0;
+        return buildEmbed(n, new MessageEmbed(json));
+      };
+
+      const previous = () => {
+        if (n === 0) return;
+        n -= 5;
+        if (n < 0) n = 0;
+        return buildEmbed(n, new MessageEmbed(json));
+      };
+
+      const next = () => {
+        const cap = count - (count % 5);
+        if (n === cap || n + 5 === count) return;
+        n += 5;
+        if (n >= count) n = cap;
+        return buildEmbed(n, new MessageEmbed(json));
+      };
+
+      const last = () => {
+        const cap = count - (count % 5);
+        if (n === cap || n + 5 === count) return;
+        n = cap;
+        if (n === count) n -= 5;
+        return buildEmbed(n, new MessageEmbed(json));
+      };
+
+      const reactions = {
+        '⏪': first,
+        '◀️': previous,
+        '▶️': next,
+        '⏩': last,
+        '⏹️': null,
+      };
+
+      const menu = new ReactionMenu(
+        message.client,
+        message.channel, 
+        message.member, 
+        buildEmbed(n, new MessageEmbed(json)), 
+        null,
+        null,
+        reactions, 
+        180000
+      );
+
+      menu.reactions['⏹️'] = menu.stop.bind(menu);
 
     }
-}
+  }
+};
