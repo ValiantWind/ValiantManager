@@ -1,5 +1,19 @@
-const { Collection, Client } = require('discord.js');
-const client = new Client({
+const Client = require('./Client.js');
+const config = require('./config.json');
+const express = require('express');
+const app = express();
+
+app.listen(3000, () => {
+    console.log('Project is running!');
+})
+
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+})
+
+
+const { Collection, Intents } = require('discord.js');
+const intents = new Intents({
     intents: [
         "GUILDS",
         "GUILD_MEMBERS",
@@ -19,11 +33,11 @@ const client = new Client({
         "GUILD_SCHEDULED_EVENTS",
     ],
 });
-module.exports = client;
+const client = new Client(config, { ws: { intents: intents } });
+//module.exports = client;
 
 require('dotenv').config()
 const mongooseConnectionString  = (process.env.MongooseConnectionString);
-const config = require('./config.json')
 const mongoose = require("mongoose");
 mongoose.connect(mongooseConnectionString, {
     useNewUrlParser: true,
@@ -32,18 +46,21 @@ mongoose.connect(mongooseConnectionString, {
 
 
 client.prefix = config.prefix
-client.commands = new Collection();
-client.aliases = new Collection();
-client.events = new Collection();
-client.functions = new Collection();
-client.models = new Collection();
-
 
 require('./handler')(client);
+
+// Initialize client
+function init() {
+    client.loadEvents('./events');
+    client.loadCommands('./commands');
+    client.login(process.env.TOKEN);
+  }
+  
+  init();
+  
+  process.on('unhandledRejection', err => client.logger.error(err));
 
 
 //client.on('ready', () => {
  //   console.log(`${client.user.tag} is now online!`)
 //})
-
-client.login(process.env.TOKEN);
